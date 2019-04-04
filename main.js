@@ -57,10 +57,11 @@ function getHours(projectId){
     }else{
       var overtime = balance+'hr';
     }
-    var colorClass = 'good';
+    var colorClass = 'zero';
+    var msg = '<span class="title">last updated balance: </span>'+balance+'hr';
     if(balance > 0){
-      msg = '<span class="title">last updated balance: </span>'+balance+'hr';
-    }else{
+      colorClass = 'good';
+    }else if(balance < 0){
       colorClass = 'bad';
       msg = '<span class="title">last updated balance: </span> Over Time ('+overtime+')';
     }

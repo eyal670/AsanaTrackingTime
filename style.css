@@ -9,3 +9,6 @@
 .ttH.bad > a{
   color: red;
 }
+.ttH.zero > a{
+  color: #bababa;
+}
