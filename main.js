@@ -4,34 +4,36 @@ console.log('Asana Extention');
 var version = '0.1';
 
 //loading the script
-jQuery( document ).ready(function() {
+jQuery(document).ready(function () {
   console.log('doc ready');
   ttGetData();
 });
-function searchProject(project){
-  var query = 'https://app.trackingtime.co/api/v4/projects/search?keyword='+project+'&type=PROJECT';
+
+function searchProject(project) {
+  var query = 'https://app.trackingtime.co/api/v4/projects/search?keyword=' + project + '&type=PROJECT';
   var a = jQuery.ajax({
     url: query,
     dataType: 'json',
     async: false,
     type: 'GET',
     "permissions": [
-        "https://divine.bitrix24.com/company/personal/user/6/tasks/"
+      "https://divine.bitrix24.com/company/personal/user/6/tasks/"
     ],
-    callback: function(r){
+    callback: function (r) {
       return r;
     }
   });
   var data = a.responseJSON.data;
-  if(data.length >= 1){
-    console.log('if'+a.responseJSON.data);
+  if (data.length >= 1) {
+    console.log('if' + a.responseJSON.data);
     var id = a.responseJSON.data[0].id;
     return id;
   }
 }
-function getHours(projectId){
-  if(projectId){
-    query = 'https://app.trackingtime.co/api/v4/projects/'+projectId;
+
+function getHours(projectId) {
+  if (projectId) {
+    query = 'https://app.trackingtime.co/api/v4/projects/' + projectId;
     var a = jQuery.ajax({
       url: query,
       dataType: 'json',
@@ -40,53 +42,60 @@ function getHours(projectId){
       "permissions": [
         "https://divine.bitrix24.com/company/personal/user/6/tasks/"
       ],
-      callback: function(r){
+      callback: function (r) {
         return r;
       }
     });
     var time = a.responseJSON.data.estimated_time;
     var worked = a.responseJSON.data.worked_hours;
-    var balance = time-worked;
+    var balance = time - worked;
     var overtime;
+    var json = a.responseJSON.data.json;
+    var table = JSON.parse(json).sheet;
+    if (table) {
+      link = table;
+    } else {
+      link = 'https://pro.trackingtime.co/#/project/' + projectId;
+    }
     balance = balance.toFixed(2);
     console.log(balance);
     console.log(time);
-    if(time == 0){
+    if (time == 0) {
       console.log('unknown');
       var overtime = 'unknown';
-    }else{
-      var overtime = balance+'hr';
+    } else {
+      var overtime = balance + 'hr';
     }
     var colorClass = 'zero';
-    var msg = '<span class="title">last updated balance: </span>'+balance+'hr';
-    if(balance > 0){
+    var msg = '<span class="title">last updated balance: </span>' + balance + 'hr';
+    if (balance > 0) {
       colorClass = 'good';
-    }else if(balance < 0){
+    } else if (balance < 0) {
       colorClass = 'bad';
-      msg = '<span class="title">last updated balance: </span> Over Time ('+overtime+')';
+      msg = '<span class="title">last updated balance: </span> Over Time (' + overtime + ')';
     }
-    jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH '+colorClass+'"><a title="open project" href="https://pro.trackingtime.co/#/project/'+projectId+'" target="_blank">'+msg+'</a></p>');
-  }else{
+    jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH ' + colorClass + '"><a title="open project" href="' + link + '" target="_blank">' + msg + '</p>');
+  } else {
     jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH bad"><a title="open TrackingTime" href="https://pro.trackingtime.co" target="_blank">project not found</a></p>');
   }
 }
 
-function ttGetData(){
+function ttGetData() {
   var project = jQuery('.ProjectPageHeader-projectName').attr('title');
-  if(project){
+  if (project) {
     project = project.trim();
     console.log(project);
     console.log('making request');
     var pid = searchProject(project);
     getHours(pid);
-  }else{
+  } else {
     //do nothing
     console.log('not a project');
   }
-  jQuery(".pageTopbarView-pageHeader").on('DOMSubtreeModified', function() {
-  	if(!jQuery('.ttH').length){
-   		console.log('project changed');
-	    setTimeout(ttGetData,1500);
-  	}
+  jQuery(".pageTopbarView-pageHeader").on('DOMSubtreeModified', function () {
+    if (!jQuery('.ttH').length) {
+      console.log('project changed');
+      setTimeout(ttGetData, 1500);
+    }
   });
 }
