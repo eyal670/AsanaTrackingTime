@@ -50,12 +50,14 @@ function getHours(projectId) {
     var worked = a.responseJSON.data.worked_hours;
     var balance = time - worked;
     var overtime;
+    var ttlink = 'https://pro.trackingtime.co/#/project/' + projectId;
+    var link = ttlink;
     var json = a.responseJSON.data.json;
-    var table = JSON.parse(json).sheet;
-    if (table) {
-      link = table;
-    } else {
-      link = 'https://pro.trackingtime.co/#/project/' + projectId;
+    if (json) {
+      var table = JSON.parse(json).sheet;
+      if (table) {
+        link = table;
+      }
     }
     balance = balance.toFixed(2);
     console.log(balance);
