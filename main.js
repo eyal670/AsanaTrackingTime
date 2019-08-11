@@ -51,7 +51,7 @@ function getHours(projectId) {
     var balance = time - worked;
     var overtime;
     var ttlink = 'https://pro.trackingtime.co/#/project/' + projectId;
-    var link = ttlink;
+    var link = 'https://docs.google.com/spreadsheets/d/19svrDgl0xCKDD1Bz-hjy1Em1o1dVqLwYVg8YBe97vAg/edit#gid=0';
     var json = a.responseJSON.data.json;
     if (json) {
       var table = JSON.parse(json).sheet;
@@ -76,7 +76,7 @@ function getHours(projectId) {
       colorClass = 'bad';
       msg = '<span class="title">last updated balance: </span> Over Time (' + overtime + ')';
     }
-    jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH ' + colorClass + '"><a title="open project" href="' + link + '" target="_blank">' + msg + '</p>');
+    jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH ' + colorClass + '"><a title="open project\'s table" href="' + link + '" target="_blank">' + msg + '</a><span class="tth_seperator"> | </span><a title="open project in TrackingTime" href="' + ttlink + '" target="_blank">tt</></p>');
   } else {
     jQuery('.TopbarPageHeaderStructure-titleRow').append('<p class="ttH bad"><a title="open TrackingTime" href="https://pro.trackingtime.co" target="_blank">project not found</a></p>');
   }

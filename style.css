@@ -1,4 +1,4 @@
-.ttH{
+.ttH {
   display: inline;
   vertical-align: middle;
   font-size: 14px;
@@ -6,9 +6,12 @@
   padding: 0;
   font-weight: 600;
 }
-.ttH.bad > a{
+
+.ttH.bad,
+.ttH.bad>a {
   color: red;
 }
-.ttH.zero > a{
+
+.ttH.zero>a {
   color: #bababa;
 }
