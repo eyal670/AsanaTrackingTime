@@ -81,8 +81,8 @@ function getHours(projectId) {
 function ttGetData() {
   window.triggered = false;
   jQuery(".AsanaPageTopbar").unbind();
-  var project = jQuery('.ProjectPageHeader-projectName').attr('title');
-  console.log('p: ' + jQuery('.ProjectPageHeader-projectName').attr('title'));
+  var project = jQuery('.ProjectPageHeader .TopbarPageHeaderStructure-title').text();
+  console.log('p: ' + jQuery('.TopbarPageHeaderStructure-title').text());
   if (project) {
     project = project.trim();
     console.log(project);
