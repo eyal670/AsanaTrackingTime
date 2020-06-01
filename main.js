@@ -12,6 +12,7 @@ jQuery(document).ready(function () {
 });
 
 function searchProject(project) {
+  project = project.replace(/\s/g,' ');
   var query = 'https://app.trackingtime.co/api/v4/projects/search?keyword=' + project + '&type=PROJECT';
   var a = jQuery.ajax({
     url: query,
@@ -26,6 +27,8 @@ function searchProject(project) {
       console.log('if' + a.responseJSON.data);
       var id = a.responseJSON.data[0].id;
       getHours(id);
+    }else{
+      console.log('no such project');
     }
   });
 }
