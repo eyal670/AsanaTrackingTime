@@ -2,7 +2,7 @@
  "manifest_version": 2,
  "name": "Asana TrackingTime Integration",
  "description": "extend Asana with JS",
- "version": "0.1",
+ "version": "0.1.2",
  "author": "Eyal Ron",
  "content_scripts": [
     {

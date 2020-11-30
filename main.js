@@ -1,7 +1,11 @@
+var myHeaders = {
+    "Authorization": "Basic ZXlhbEBkaXZpbmVzaXRlcy5jby5pbDppMTlhYmQ1bDh0ZzFja2lkaXRiZDg3Z3NpaQ==",
+    "Cookie": "__cfduid=dffbdff70157a7f9f5341eb162c5b2e2d1606730253; AWSELB=6D6FCB2F12794CF86F4D94458D62AA2CC77F540C607C6CE95F5BF4C1FF2BBCC268111BEA13BF3CE18D9E0263A3A6D98352779ABA9D43971CEED81D5733E6711B1760CF1C07"
+  }
 console.log('Asana Extention');
 // chrome.pageAction.show(1);
 //options vars
-var version = '0.1';
+var version = '0.1.2';
 
 //loading the script
 jQuery(document).ready(function () {
@@ -18,6 +22,7 @@ function searchProject(project) {
     url: query,
     dataType: 'json',
     type: 'GET',
+    headers: myHeaders,
     "permissions": [
       "https://divine.bitrix24.com/company/personal/user/6/tasks/"
     ]
@@ -40,6 +45,7 @@ function getHours(projectId) {
       url: query,
       dataType: 'json',
       type: 'GET',
+      headers: myHeaders,
       "permissions": [
         "https://divine.bitrix24.com/company/personal/user/6/tasks/"
       ]
